@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Configuration;
 
 namespace AdServerInvalidAdControlKeys
 {
@@ -11,11 +12,8 @@ namespace AdServerInvalidAdControlKeys
     {
         static void Main(string[] args)
         {
-//            String dirName = "C:\\temp\\BadAdControlRecs12-22";
-//            String outFileName = "C:\\temp\\AdControlIds12-22.csv";
-            String dirName = "C:\\temp\\BadAdControlRecsLast7Days";
-            String outFileName = "C:\\temp\\AdControlIdsLast7Days.csv";
-
+            String dirName = ConfigurationManager.AppSettings["DirName"];
+            String outFileName = ConfigurationManager.AppSettings["OutFileName"];
             processFiles(dirName, outFileName);
         }
 
@@ -59,7 +57,7 @@ namespace AdServerInvalidAdControlKeys
 
             using (StreamWriter sw = File.CreateText(outFileName))
             {
-                sw.WriteLine("CampId,Id,Id,,Total");
+                sw.WriteLine("CampId,Creative Id,Placement Id,,Total");
                 var list = theDictionary.Keys.ToList();
                 list.Sort();
                 foreach (var key in list)
